@@ -1,6 +1,6 @@
 FROM chainmapper/walletbase-trusty
 	
-ENV WALLET_URL=https://github.com/FOScoin/Wallets/blob/master/FOSLINUX.zip?raw=true
+ENV WALLET_URL=https://github.com/FOScoin/Wallets/raw/master/FOSLINUX.zip
 
 RUN wget $WALLET_URL -O /tmp/wallet.zip \
 	&& unzip -j /tmp/wallet.zip -d /usr/local/bin \
