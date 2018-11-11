@@ -1,18 +1,20 @@
-FROM chainmapper/walletbase-trusty
+FROM chainmapper/walletbase-xenial
 	
-ENV WALLET_URL=https://github.com/FOScoin/Wallets/raw/master/FOSLINUX.zip
+ENV WALLET_URL=https://dist.jurassic.host/fos/fossilcoin-1.3.0-linux.tar.gz
 
-RUN wget $WALLET_URL -O /tmp/wallet.zip \
-	&& unzip -j /tmp/wallet.zip -d /usr/local/bin \
-	&& chmod +x /usr/local/bin/*
+RUN wget $WALLET_URL -O /tmp/wallet.tar.gz \
+	&& cd /usr/local/bin \
+	&& tar xzvf /tmp/wallet.tar.gz --strip-components 1\
+	&& rm /tmp/wallet.tar.gz
 
 #rpc port & mainport
-EXPOSE 2828 2727
+EXPOSE 6666 2727
 
 RUN mkdir /data
 ENV HOME /data
 
 COPY start.sh /start.sh
 COPY gen_config.sh /gen_config.sh
+COPY wallet.sh /wallet.sh
 RUN chmod 777 /*.sh
 CMD /start.sh fossilcoin.conf FOS fossilcoind
